@@ -2,7 +2,7 @@ install:
 	poetry install
 
 lint:
-	poetry run flake8 page_analyzer
+	poetry run flake8 task_manager
 
 selfcheck:
 	poetry check
@@ -12,8 +12,7 @@ check: selfcheck lint
 dev:
 	poetry run python manage.py runserver
 
-PORT ?= 8000
 start:
-	poetry run gunicorn -w 5 -b 0.0.0.0:$(PORT) page_analyzer:app
+	poetry run gunicorn task_manager.wsgi
 
-.PHONY: install test lint selfcheck check page_analyzer build
+.PHONY: install test lint selfcheck check task_manager
