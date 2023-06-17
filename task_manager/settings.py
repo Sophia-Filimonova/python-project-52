@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'task_manager',
     'bootstrap4',
+    'task_manager.users',
 ]
 
 MIDDLEWARE = [
@@ -92,11 +93,12 @@ DATABASES = {
 }
 
 DATABASE_URL = os.getenv('DATABASE_URL')
-DATABASES['default'] = dj_database_url.config(
-    default=DATABASE_URL,
-    conn_max_age=600,
-    conn_health_checks=True,
-)
+if DATABASE_URL:
+    DATABASES['default'] = dj_database_url.config(
+        default=DATABASE_URL,
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
