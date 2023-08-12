@@ -1,3 +1,44 @@
 .venv/
-__pycache__
 .env
+__pycache__
+*.pyc
+db.sqlite3
+staticfiles/
+
+# Packages
+*.egg
+!/tests/**/*.egg
+*.egg-info
+dist/
+build
+_build
+.cache
+*.so
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+coverage.xml
+.tox
+.pytest_cache/
+
+.idea/
+.python-version
+
+.mypy_cache
+
+/releases/*
+pip-wheel-metadata
+/poetry.toml
+
+# General
+.DS_Store
+.Trashes
+.Spotlight-V100
+Thumbs.db
+$RECYCLE.BIN/
+
+# VsCode
+.vscode
