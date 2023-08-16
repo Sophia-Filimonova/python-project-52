@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-16 22:32+0300\n"
+"POT-Creation-Date: 2023-08-17 00:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr "Веб-приложение на Django"
 msgid "Get Started"
 msgstr "Старт"
 
-#: task_manager/templates/navbar.html:11 task_manager/users/views.py:18
+#: task_manager/templates/navbar.html:11 task_manager/users/views.py:17
 msgid "Users"
 msgstr "Пользователи"
 
@@ -41,9 +41,13 @@ msgstr "Пользователи"
 msgid "Entrance"
 msgstr "Вход"
 
-#: task_manager/templates/navbar.html:19 task_manager/users/views.py:28
+#: task_manager/templates/navbar.html:19 task_manager/users/views.py:27
 msgid "Registration"
 msgstr "Регистрация"
+
+#: task_manager/templates/users/delete.html:9
+msgid "Are you sure you want to delete"
+msgstr "Вы уверены, что хотите удалить"
 
 #: task_manager/templates/users/list.html:13
 msgid "Username"
@@ -57,7 +61,7 @@ msgstr "Полное имя"
 msgid "Creation date"
 msgstr "Дата создания"
 
-#: task_manager/templates/users/list.html:30
+#: task_manager/templates/users/list.html:30 task_manager/users/views.py:41
 msgid "Update"
 msgstr "Изменить"
 
@@ -73,10 +77,30 @@ msgstr "Имя"
 msgid "Last name"
 msgstr "Фамилия"
 
-#: task_manager/users/views.py:29
+#: task_manager/users/views.py:28
 msgid "Register "
 msgstr "Зарегистрировать"
 
-#: task_manager/users/views.py:31
+#: task_manager/users/views.py:30
 msgid "User is created successfully"
 msgstr "Пользователь успешно зарегистрирован"
+
+#: task_manager/users/views.py:38
+msgid "User is successfully updated"
+msgstr "Пользователь успешно изменен"
+
+#: task_manager/users/views.py:40
+msgid "Update user"
+msgstr "Изменение пользователя"
+
+#: task_manager/users/views.py:49
+msgid "User is successfully deleted"
+msgstr "Пользователь успешно удален"
+
+#: task_manager/users/views.py:51
+msgid "Deleting user"
+msgstr "Удаление пользователя"
+
+#: task_manager/users/views.py:52
+msgid "Yes, delete"
+msgstr "Да, удалить"
