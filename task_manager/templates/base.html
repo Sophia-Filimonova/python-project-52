@@ -1,12 +1,7 @@
-{% load bootstrap4 %}
-
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-{% bootstrap_messages %}
-
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
+{% load bootstrap4 %}
+
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
@@ -15,34 +10,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Fourth project for Hexlet.io">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}{% translate "Task manager" %}</title>
+    {% bootstrap_css %}
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-light mb-3" style="background-color: #e3f2fd;">
-        <a class="navbar-brand" href="/">{% translate "Task manager" %}</a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggleExternalContent">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse show" id="navbarLight">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">{% translate "Users" %}</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link active" href="/login/">{% translate "Entrance" %}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/users/create/">{% translate "Registration" %}</a>
-            </li>
-          </ul>
-        </div>
-    </nav>
-   
-  </header>
+    <header>
+        {% include 'navbar.html' %}
+    </header>
   
   {% if messages %}
   <ul class="messages">
@@ -57,19 +32,15 @@
   </ul>
   {% endif %}
 
-  <main class="flex-grow-1">
-    <div class="container-lg mt-3">
-        {% block main %}{% endblock %}
-    </div>
-  </main>
+    <main class="container wrapper flex-grow-1">
+          {% bootstrap_messages %}
+          {% block main %}{% endblock %}
+    </main>
 
-  <footer class="border-top py-3 mt-5 flex-shrink-0">
-    <div class="container-lg">
-      <div class="text-center">
-        <a href="https://ru.hexlet.io/" target="_blank">Hexlet</a>
-      </div>
-    </div>
-  </footer>
-  
+    <footer>
+        {% include 'footer.html' %}
+    </footer>
+    {% bootstrap_javascript jquery='full' %}
 </body>
+
 </html>

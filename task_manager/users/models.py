@@ -1,7 +1,7 @@
-from django.db import models
 from django.contrib.auth.models import User
 
 
-class User_(User)
+class MyUser(User):
 
-# Create your models here.
+    def __str__(self):
+        return " ".join((self.first_name, self.last_name))
