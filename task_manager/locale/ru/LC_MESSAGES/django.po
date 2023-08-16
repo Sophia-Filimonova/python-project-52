@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-16 18:39+0300\n"
+"POT-Creation-Date: 2023-08-16 22:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,14 +20,9 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: task_manager/templates/base.html:13 task_manager/templates/navbar.html:2
+#: task_manager/templates/base.html:13 task_manager/templates/index.html:9
+#: task_manager/templates/navbar.html:4
 msgid "Task manager"
-msgstr "Менеджер задач"
-
-#: task_manager/templates/index.html:9
-#, fuzzy
-#| msgid "Task manager"
-msgid "Task Manager"
 msgstr "Менеджер задач"
 
 #: task_manager/templates/index.html:10
@@ -38,23 +33,21 @@ msgstr "Веб-приложение на Django"
 msgid "Get Started"
 msgstr "Старт"
 
-#: task_manager/templates/navbar.html:9
+#: task_manager/templates/navbar.html:11 task_manager/users/views.py:18
 msgid "Users"
 msgstr "Пользователи"
 
-#: task_manager/templates/navbar.html:14
+#: task_manager/templates/navbar.html:16
 msgid "Entrance"
 msgstr "Вход"
 
-#: task_manager/templates/navbar.html:17
+#: task_manager/templates/navbar.html:19 task_manager/users/views.py:28
 msgid "Registration"
 msgstr "Регистрация"
 
 #: task_manager/templates/users/list.html:13
-#, fuzzy
-#| msgid "Users"
 msgid "Username"
-msgstr "Пользователи"
+msgstr "Имя пользователя"
 
 #: task_manager/templates/users/list.html:14
 msgid "Full name"
@@ -64,10 +57,26 @@ msgstr "Полное имя"
 msgid "Creation date"
 msgstr "Дата создания"
 
-#: task_manager/templates/users/list.html:29
+#: task_manager/templates/users/list.html:30
 msgid "Update"
 msgstr "Изменить"
 
-#: task_manager/templates/users/list.html:31
+#: task_manager/templates/users/list.html:33
 msgid "Delete"
 msgstr "Удалить"
+
+#: task_manager/users/forms.py:11
+msgid "First name"
+msgstr "Имя"
+
+#: task_manager/users/forms.py:14
+msgid "Last name"
+msgstr "Фамилия"
+
+#: task_manager/users/views.py:29
+msgid "Register "
+msgstr "Зарегистрировать"
+
+#: task_manager/users/views.py:31
+msgid "User is created successfully"
+msgstr "Пользователь успешно зарегистрирован"
