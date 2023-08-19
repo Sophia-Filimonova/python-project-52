@@ -4,8 +4,8 @@
 
 
 {% block main %}
-    <div class="card">
-        <div class="card-body p-5 shadow" style="background-color: #e3f2fd;">
+    <div class="card border border-dark">
+        <div class="card-body p-5 shadow-lg" style="background-color: #e3f2fd;">
             <h1 class="my-4 display-4">{% translate 'Task manager' %}</h1>
             <p class="lead">{% translate 'Django web application' %}</p>
 
@@ -14,7 +14,7 @@
             {% if user.is_authenticated %}
                 <a class="btn btn-outline-dark btn-lg" href="{% url 'users' %}">
             {% else %}
-                <a class="btn btn-outline-dark btn-lg" href="{% url 'users' %}">
+                <a class="btn btn-outline-dark btn-lg" href="{% url 'login' %}">
             {% endif %}
 
             {% trans 'Get Started' %}

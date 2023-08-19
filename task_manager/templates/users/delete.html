@@ -6,7 +6,7 @@
     <h1 class="my-4">{{ header }}</h1>
 
     <form method="post">
-        <p>{% trans 'Are you sure you want to delete' %} {{ user }}?</p>
+        <p>{% trans 'Are you sure you want to delete' %} {{ user.first_name }} {{ user.last_name }}?</p>
         {% csrf_token %}
         {% bootstrap_button button_text button_type="submit" button_class="btn btn-danger" %}
     </form>

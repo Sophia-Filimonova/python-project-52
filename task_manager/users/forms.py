@@ -14,7 +14,7 @@ class UserForm(UserCreationForm):
         max_length=50, required=True, label=_("Last name")
     )
 
-    class Meta(UserCreationForm.Meta):
+    class Meta:
         model = User
         fields = ['first_name', 'last_name',
                   'username', 'password1', 'password2'
