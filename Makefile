@@ -1,7 +1,7 @@
 MANAGE := poetry run python manage.py
 
-install: .env
-	@poetry install
+install:
+	poetry install
 
 migrate:
 	@$(MANAGE) makemigrations
