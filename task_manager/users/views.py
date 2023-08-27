@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 
 from task_manager.mixins import MyLoginRequiredMixin,\
-     UserPermissionMixin, DeleteProtectionMixin
+    UserPermissionMixin, DeleteProtectionMixin
 from .models import MyUser as User
 from .forms import UserForm
 
@@ -37,6 +37,8 @@ class UserUpdateView(MyLoginRequiredMixin, UserPermissionMixin,
     form_class = UserForm
     success_url = reverse_lazy('users')
     success_message = _('User is successfully updated')
+    permission_message = _('You have no rights to change another user.')
+    permission_url = reverse_lazy('users')
     extra_context = {
         'header': _('Update user'),
         'button_text': _('Update'),
@@ -50,6 +52,10 @@ class UserDeleteView(MyLoginRequiredMixin, UserPermissionMixin,
     model = User
     success_url = reverse_lazy('users')
     success_message = _('User is successfully deleted')
+    permission_message = _('You have no rights to change another user.')
+    permission_url = reverse_lazy('users')
+    protected_message = _('Unable to delete a user because he is being used')
+    protected_url = reverse_lazy('users')
     extra_context = {
         'header': _('Deleting user'),
         'button_text': _('Yes, delete'),

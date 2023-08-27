@@ -5,6 +5,8 @@ from django.db.models import ProtectedError
 from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 
+from .users.models import MyUser as User
+
 
 class MyLoginRequiredMixin(LoginRequiredMixin):
 
@@ -18,11 +20,14 @@ class MyLoginRequiredMixin(LoginRequiredMixin):
 
 
 class UserPermissionMixin(UserPassesTestMixin):
-    permission_message = _("You can't update another user.")
+    permission_message = None
     permission_url = None
 
     def test_func(self):
-        return self.get_object() == self.request.user
+        user_instance = User.objects.get(pk=self.request.user.id)
+        obj = self.get_object()
+        object_instance = User.objects.get(pk=obj.id)
+        return user_instance == object_instance
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_message)
