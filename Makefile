@@ -4,8 +4,8 @@ install:
 	poetry install
 
 migrate:
-	@$(MANAGE) makemigrations
-	@$(MANAGE) migrate
+	${MANAGE} makemigrations
+	${MANAGE} migrate
 
 build: install migrate
 

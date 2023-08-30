@@ -8,10 +8,10 @@ from .models import MyUser as User
 class UserForm(UserCreationForm):
 
     first_name = forms.CharField(
-        max_length=50, required=True, label=_("First name")
+        max_length=150, required=True, label=_("First name")
     )
     last_name = forms.CharField(
-        max_length=50, required=True, label=_("Last name")
+        max_length=150, required=True, label=_("Last name")
     )
 
     class Meta:
