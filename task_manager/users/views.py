@@ -54,7 +54,7 @@ class UserDeleteView(MyLoginRequiredMixin, UserPermissionMixin,
     success_message = _('User is successfully deleted')
     permission_message = _('You have no rights to change another user.')
     permission_url = reverse_lazy('users')
-    protected_message = _('Unable to delete a user because he is being used')
+    protected_message = _('Unable to delete a user because he is in use')
     protected_url = reverse_lazy('users')
     extra_context = {
         'header': _('Deleting user'),
