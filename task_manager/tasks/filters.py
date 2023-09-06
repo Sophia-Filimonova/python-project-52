@@ -20,7 +20,7 @@ class TaskFilter(FilterSet):
         queryset=User.objects.all(),
     )
 
-    label = ModelChoiceFilter(
+    labels = ModelChoiceFilter(
         label=_('Label'),
         queryset=Label.objects.all(),
     )
