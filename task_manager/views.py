@@ -8,6 +8,8 @@ from django.contrib import messages
 
 
 def home(request):
+    a = None
+    a.hello() #
     return render(request, 'home.html')
 
 
