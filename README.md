@@ -6,3 +6,18 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/312e63d1641201a3cd70/test_coverage)](https://codeclimate.com/github/Sophia-Filimonova/python-project-52/test_coverage)
 
 [ДЕМО ВЕРСИЯ](https://task-manager-vb7t.onrender.com/users/)
+
+*<b>TASK MANAGER</b> is a Django web application. It allows you to set tasks, assign executors and change their statuses. Registration and authentication are required to work with the system.* 
+
+
+*<b>Built With:</b>*
+<ul><li>Python</li>
+<li>Django</li>
+<li>Bootstrap 4</li>
+<li>PostgreSQL</li>
+<li>Poetry</li>
+<li>Gunicorn</li>
+<li>Rollbar</li>
+<li>Flake8</li>
+</ul>
+
