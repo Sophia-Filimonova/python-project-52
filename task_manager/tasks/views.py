@@ -5,6 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django_filters.views import FilterView
 
 from task_manager.mixins import MyLoginRequiredMixin, AuthorDeletionMixin
+from task_manager.users.models import MyUser as User
 from .models import Task
 from .forms import TaskForm
 from .filters import TaskFilter
@@ -42,7 +43,8 @@ class TaskCreateView(MyLoginRequiredMixin, SuccessMessageMixin, CreateView):
     }
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        user = self.request.user
+        form.instance.author = User.objects.get(pk=user.pk)
         return super().form_valid(form)
 
 
