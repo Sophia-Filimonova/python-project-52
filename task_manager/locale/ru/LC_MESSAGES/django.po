@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-05 22:53+0300\n"
+"POT-Creation-Date: 2023-09-09 12:30+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,7 +57,7 @@ msgid "Create label"
 msgstr "Создать метку"
 
 #: task_manager/labels/views.py:28 task_manager/statuses/views.py:28
-#: task_manager/tasks/views.py:42
+#: task_manager/tasks/views.py:41
 msgid "Create"
 msgstr "Создать"
 
@@ -70,7 +70,7 @@ msgid "Change label"
 msgstr "Изменение метки"
 
 #: task_manager/labels/views.py:40 task_manager/statuses/views.py:40
-#: task_manager/tasks/views.py:59
+#: task_manager/tasks/views.py:57
 msgid "Change"
 msgstr "Изменить"
 
@@ -87,7 +87,7 @@ msgid "Delete label"
 msgstr "Удаление метки"
 
 #: task_manager/labels/views.py:54 task_manager/statuses/views.py:54
-#: task_manager/tasks/views.py:73 task_manager/users/views.py:61
+#: task_manager/tasks/views.py:71 task_manager/users/views.py:61
 msgid "Yes, delete"
 msgstr "Да, удалить"
 
@@ -162,44 +162,44 @@ msgstr "метки"
 msgid "Task"
 msgstr "Задача"
 
-#: task_manager/tasks/models.py:57 task_manager/tasks/views.py:20
+#: task_manager/tasks/models.py:57 task_manager/tasks/views.py:19
 #: task_manager/templates/navbar.html:18
 msgid "Tasks"
 msgstr "Задачи"
 
-#: task_manager/tasks/views.py:21
+#: task_manager/tasks/views.py:20
 msgid "Show"
 msgstr "Показать"
 
-#: task_manager/tasks/views.py:30
+#: task_manager/tasks/views.py:29
 msgid "Task viewing"
 msgstr "Просмотр задачи"
 
-#: task_manager/tasks/views.py:39
+#: task_manager/tasks/views.py:38
 msgid "Task is successfully created"
 msgstr "Задача успешно создана"
 
-#: task_manager/tasks/views.py:41 task_manager/templates/tasks/list.html:9
+#: task_manager/tasks/views.py:40 task_manager/templates/tasks/list.html:9
 msgid "Create task"
 msgstr "Создать задачу"
 
-#: task_manager/tasks/views.py:56
+#: task_manager/tasks/views.py:54
 msgid "Task is successfully changed"
 msgstr "Задача успешно изменена"
 
-#: task_manager/tasks/views.py:58
+#: task_manager/tasks/views.py:56
 msgid "Task change"
 msgstr "Изменение задачи"
 
-#: task_manager/tasks/views.py:68
+#: task_manager/tasks/views.py:66
 msgid "Task is successfully deleted"
 msgstr "Задача успешно удалена"
 
-#: task_manager/tasks/views.py:69
+#: task_manager/tasks/views.py:67
 msgid "The task can be deleted only by its author"
 msgstr "Задачу может удалить только ее автор"
 
-#: task_manager/tasks/views.py:72
+#: task_manager/tasks/views.py:70
 msgid "Delete task"
 msgstr "Удаление задачи"
 
@@ -311,11 +311,11 @@ msgstr "Вход"
 msgid "Enter"
 msgstr "Войти"
 
-#: task_manager/views.py:24
+#: task_manager/views.py:22
 msgid "You are logged in"
 msgstr "Вы залогинены"
 
-#: task_manager/views.py:29
+#: task_manager/views.py:26
 msgid ""
 "Please enter a correct username and password.                          Note "
 "that both fields may be case-sensitive."
@@ -323,6 +323,6 @@ msgstr ""
 "Пожалуйста, введите правильные имя пользователя и пароль. Оба поля могут "
 "быть чувствительны к регистру."
 
-#: task_manager/views.py:38
+#: task_manager/views.py:35
 msgid "You are logged out"
 msgstr "Вы разлогинены"
