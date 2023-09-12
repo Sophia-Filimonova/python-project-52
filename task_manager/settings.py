@@ -90,6 +90,8 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'users.MyUser'
+
 WSGI_APPLICATION = 'task_manager.wsgi.application'
 
 
