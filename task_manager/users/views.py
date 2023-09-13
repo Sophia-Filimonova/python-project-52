@@ -5,12 +5,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 from task_manager.mixins import MyLoginRequiredMixin,\
     UserPermissionMixin, DeleteProtectionMixin
-from .models import MyUser as User
+from .models import MyUser
 from .forms import UserForm
 
 
 class UserListView(ListView):
-    model = User
+    model = MyUser
     template_name = "users/list.html"
     context_object_name = 'users'
     extra_context = {
@@ -19,7 +19,7 @@ class UserListView(ListView):
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
-    model = User
+    model = MyUser
     form_class = UserForm
     template_name = 'form.html'
     success_url = reverse_lazy('login')
@@ -33,7 +33,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
 class UserUpdateView(MyLoginRequiredMixin, UserPermissionMixin,
                      SuccessMessageMixin, UpdateView):
     template_name = 'form.html'
-    model = User
+    model = MyUser
     form_class = UserForm
     success_url = reverse_lazy('users')
     success_message = _('User is successfully updated')
@@ -49,7 +49,7 @@ class UserDeleteView(MyLoginRequiredMixin, UserPermissionMixin,
                      DeleteProtectionMixin,
                      SuccessMessageMixin, DeleteView):
     template_name = 'users/delete.html'
-    model = User
+    model = MyUser
     success_url = reverse_lazy('users')
     success_message = _('User is successfully deleted')
     permission_message = _('You have no rights to change another user.')
