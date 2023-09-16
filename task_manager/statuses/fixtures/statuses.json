@@ -1,0 +1,26 @@
+[
+    {
+        "model": "statuses.status",
+        "pk": 1,
+        "fields": {
+            "name": "Teststatus_1",
+            "date_created": "2020-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "statuses.status",
+        "pk": 2,
+        "fields": {
+            "name": "Teststatus_2",
+            "date_created": "2020-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "statuses.status",
+        "pk": 3,
+        "fields": {
+            "name": "Teststatus_3",
+            "date_created": "2020-01-01T00:00:00Z"
+        }
+    }
+]

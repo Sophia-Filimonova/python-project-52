@@ -1,0 +1,26 @@
+[
+    {
+        "model": "labels.label",
+        "pk": 1,
+        "fields": {
+            "name": "Testlabel_1",
+            "date_created": "2020-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "labels.label",
+        "pk": 2,
+        "fields": {
+            "name": "Testlabel_2",
+            "date_created": "2020-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "labels.label",
+        "pk": 3,
+        "fields": {
+            "name": "Testlabel_3",
+            "date_created": "2020-01-01T00:00:00Z"
+        }
+    }
+]

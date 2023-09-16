@@ -52,7 +52,7 @@ class UserDeleteView(MyLoginRequiredMixin, UserPermissionMixin,
     model = MyUser
     success_url = reverse_lazy('users')
     success_message = _('User is successfully deleted')
-    permission_message = _('You have no rights to change another user.')
+    permission_message = _('You have no rights to delete another user.')
     permission_url = reverse_lazy('users')
     protected_message = _('Unable to delete a user because he is in use')
     protected_url = reverse_lazy('users')
