@@ -9,7 +9,7 @@
 [DEMO VERSION](https://task-manager-vb7t.onrender.com/users/)
 
 
-*<b>TASK MANAGER</b> is a Django web application. It allows you to set tasks, assign executors and change task's statuses. Users registration and authentication are required to work with the application.* 
+*<b>TASK MANAGER</b> is a Django web application. It allows you to set tasks, assign executors and change task's statuses. Users registration and authentication are required to work with the application. The application uses localization from English into Russian.* 
 
 
 ### Built With:
