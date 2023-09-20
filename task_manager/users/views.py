@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 
 from task_manager.mixins import MyLoginRequiredMixin,\
-    UserPermissionMixin, DeleteProtectionMixin
+    SelfCheckUserMixin, CanDeleteProtectedEntityMixin
 from .models import MyUser
 from .forms import UserForm
 
@@ -30,7 +30,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     }
 
 
-class UserUpdateView(MyLoginRequiredMixin, UserPermissionMixin,
+class UserUpdateView(MyLoginRequiredMixin, SelfCheckUserMixin,
                      SuccessMessageMixin, UpdateView):
     template_name = 'form.html'
     model = MyUser
@@ -45,8 +45,8 @@ class UserUpdateView(MyLoginRequiredMixin, UserPermissionMixin,
     }
 
 
-class UserDeleteView(MyLoginRequiredMixin, UserPermissionMixin,
-                     DeleteProtectionMixin,
+class UserDeleteView(MyLoginRequiredMixin, SelfCheckUserMixin,
+                     CanDeleteProtectedEntityMixin,
                      SuccessMessageMixin, DeleteView):
     template_name = 'users/delete.html'
     model = MyUser

@@ -1,0 +1,16 @@
+[
+{
+    "username": "Testuser1",
+    "first_name": "Test",
+    "last_name": "User",
+    "password1": "33Test1122!",
+    "password2": "33Test1122!"
+},
+{
+    "username": "Testuser2",
+    "first_name": "Test",
+    "last_name": "User",
+    "password1": "33Test1122!",
+    "password2": "33Test1122!"
+}
+]

@@ -5,8 +5,6 @@ from django.db.models import ProtectedError
 from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 
-from .users.models import MyUser as User
-
 
 class MyLoginRequiredMixin(LoginRequiredMixin):
 
@@ -19,22 +17,19 @@ class MyLoginRequiredMixin(LoginRequiredMixin):
         return super().dispatch(request, *args, **kwargs)
 
 
-class UserPermissionMixin(UserPassesTestMixin):
+class SelfCheckUserMixin(UserPassesTestMixin):
     permission_message = None
     permission_url = None
 
     def test_func(self):
-        user_instance = User.objects.get(pk=self.request.user.id)
-        obj = self.get_object()
-        object_instance = User.objects.get(pk=obj.id)
-        return user_instance == object_instance
+        return self.get_object() == self.request.user
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_message)
         return redirect(self.permission_url)
 
 
-class DeleteProtectionMixin:
+class CanDeleteProtectedEntityMixin:
     protected_message = None
     protected_url = None
 
@@ -46,14 +41,12 @@ class DeleteProtectionMixin:
             return redirect(self.protected_url)
 
 
-class AuthorDeletionMixin(UserPassesTestMixin):
+class AuthorCanDeleteTaskMixin(UserPassesTestMixin):
     author_message = None
     author_url = None
 
     def test_func(self):
-        author = User.objects.get(pk=self.get_object().author_id)
-        user = User.objects.get(pk=self.request.user.id)
-        return user == author
+        return self.get_object().author == self.request.user
 
     def handle_no_permission(self):
         messages.error(self.request, self.author_message)

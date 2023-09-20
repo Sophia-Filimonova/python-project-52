@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 from django_filters.views import FilterView
 
-from task_manager.mixins import MyLoginRequiredMixin, AuthorDeletionMixin
+from task_manager.mixins import MyLoginRequiredMixin, AuthorCanDeleteTaskMixin
 from .models import Task
 from .forms import TaskForm
 from .filters import TaskFilter
@@ -58,7 +58,7 @@ class TaskUpdateView(MyLoginRequiredMixin, SuccessMessageMixin, UpdateView):
     }
 
 
-class TaskDeleteView(MyLoginRequiredMixin, AuthorDeletionMixin,
+class TaskDeleteView(MyLoginRequiredMixin, AuthorCanDeleteTaskMixin,
                      SuccessMessageMixin, DeleteView):
     template_name = 'tasks/delete.html'
     model = Task

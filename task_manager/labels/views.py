@@ -3,7 +3,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 
-from task_manager.mixins import MyLoginRequiredMixin, DeleteProtectionMixin
+from task_manager.mixins import MyLoginRequiredMixin, CanDeleteProtectedEntityMixin
 from .models import Label
 from .forms import LabelForm
 
@@ -41,7 +41,7 @@ class LabelUpdateView(MyLoginRequiredMixin, SuccessMessageMixin, UpdateView):
     }
 
 
-class LabelDeleteView(MyLoginRequiredMixin, DeleteProtectionMixin,
+class LabelDeleteView(MyLoginRequiredMixin, CanDeleteProtectedEntityMixin,
                       SuccessMessageMixin, DeleteView):
     template_name = 'labels/delete.html'
     model = Label

@@ -3,7 +3,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 
-from task_manager.mixins import MyLoginRequiredMixin, DeleteProtectionMixin
+from task_manager.mixins import MyLoginRequiredMixin, CanDeleteProtectedEntityMixin
 from .models import Status
 from .forms import StatusForm
 
@@ -41,7 +41,7 @@ class StatusUpdateView(MyLoginRequiredMixin, SuccessMessageMixin, UpdateView):
     }
 
 
-class StatusDeleteView(MyLoginRequiredMixin, DeleteProtectionMixin,
+class StatusDeleteView(MyLoginRequiredMixin, CanDeleteProtectedEntityMixin,
                        SuccessMessageMixin, DeleteView):
     template_name = 'statuses/delete.html'
     model = Status

@@ -1,9 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse_lazy
-import json
-import os
-from django.conf import settings
-from task_manager.helpers import test_english, remove_rollbar
+from django.utils.translation import gettext_lazy as _
+from task_manager.helper import load_data
+from task_manager.settings import test_english, remove_rollbar
 from .models import MyUser as User
 
 
@@ -14,89 +13,60 @@ class UserCrudTestCase(TestCase):
     fixtures = ["users"]
 
     def setUp(self):
-        for user in User.objects.all():
+        self.passwords_dict = {}
+        self.users = User.objects.all()
+        for user in self.users:
+            self.passwords_dict[user.pk] = user.password
             user.set_password(user.password)
             user.save()
 
-        with open(os.path.join(
-            settings.BASE_DIR,
-            'task_manager',
-            'users',
-            'fixtures',
-            'users.json'
-        )) as users_json:
-            users_fixtures_data = users_json.read()
-
-        self.users_data = json.loads(users_fixtures_data)
-
     def test_create_user(self):
 
-        response = self.client.get('/users/create/')
-        self.assertContains(response, "Registration", status_code=200)
+        test_users = load_data('test_users.json')
+        response = self.client.get(reverse_lazy('user_create'))
+        self.assertContains(response, _('Registration'), status_code=200)
 
         response = self.client.post(
-            '/users/create/',
-            {
-                'username': "Testuser1",
-                'first_name': "Test",
-                'last_name': "User",
-                'password1': "33Test1122!",
-                'password2': "33Test1122!",
-            },
+            reverse_lazy('user_create'),
+            test_users[0],
             follow=True
         )
-        self.assertContains(response, 'User is created successfully', status_code=200)
+        self.assertContains(response, _('User is created successfully'), status_code=200)
         self.assertTrue(
-            User.objects.filter(username="Testuser1").exists()
+            User.objects.filter(username=test_users[0]["username"]).exists()
         )
 
         response = self.client.post(
-            '/users/create/',
-            {
-                'username': "Testuser2",
-                'first_name': "Test",
-                'last_name': "User",
-                'password1': "33Test1122!",
-                'password2': "33Test1122!",
-            },
+            reverse_lazy('user_create'),
+            test_users[1],
             follow=False
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy('login'))
         self.assertTrue(
-            User.objects.filter(username="Testuser2").exists()
+            User.objects.filter(username=test_users[1]["username"]).exists()
         )
 
     def test_login(self):
 
-        # response = self.client.post(
-        #     '/login/',
-        #     {
-        #         'username': self.users_data[0]['fields']['username'],
-        #         'password': "12321323"
-        #     }
-        # )
-        # print(response.content)
-        # self.assertContains(response, "Invalid username or password", status_code=200)
-
-        response = self.client.get('/login/')
-        self.assertContains(response, "Login", status_code=200)
+        response = self.client.get(reverse_lazy('login'))
+        self.assertContains(response, _('Login'), status_code=200)
 
         response = self.client.post(
-            '/login/',
+            reverse_lazy('login'),
             {
-                'username': self.users_data[0]['fields']['username'],
-                'password': self.users_data[0]['fields']['password'],
+                "username": self.users[0].username,
+                "password": self.passwords_dict[self.users[0].pk],
             },
             follow=True
         )
-        self.assertContains(response, "Exit", status_code=200)
+        self.assertContains(response, _('Exit'), status_code=200)
 
         response = self.client.post(
-            '/login/',
+            reverse_lazy('login'),
             {
-                'username': self.users_data[0]['fields']['username'],
-                'password': self.users_data[0]['fields']['password'],
+                'username': self.users[0].username,
+                'password': self.passwords_dict[self.users[0].pk],
             },
             follow=False
         )
@@ -105,59 +75,57 @@ class UserCrudTestCase(TestCase):
 
     def test_update_user(self):
 
-        request_url = '/users/' + str(self.users_data[0]['pk']) + '/update/'
+        request_url = reverse_lazy('user_update', kwargs={'pk': self.users[0].pk})
 
         response = self.client.get(request_url, follow=True)
-        self.assertContains(response, 'You are not logged in! Please log in.', status_code=200)
+        self.assertContains(response, _('You are not logged in! Please log in.'), status_code=200)
 
-        self.client.login(
-            username=self.users_data[1]['fields']['username'],
-            password=self.users_data[1]['fields']['password']
+        self.client.force_login(self.users[1])
+        response = self.client.get(request_url, follow=True)
+        self.assertContains(
+            response,
+            _('You have no rights to change another user.'),
+            status_code=200
         )
-        response = self.client.get(request_url, follow=True)
-        self.assertContains(response, 'You have no rights to change another user.', status_code=200)
 
-        request_url = '/users/' + str(self.users_data[1]['pk']) + '/update/'
-
+        request_url = reverse_lazy('user_update', kwargs={'pk': self.users[1].pk})
+        old_name = self.users[1].username
         response = self.client.post(
             request_url,
             {
-                'username': self.users_data[1]['fields']['username'] + 'edit',
-                'first_name': self.users_data[1]['fields']['first_name'] + 'edit',
-                'last_name': self.users_data[1]['fields']['last_name'] + 'edit',
-                'password1': self.users_data[1]['fields']['password'] + 'edit',
-                'password2': self.users_data[1]['fields']['password'] + 'edit',
+                'username': self.users[1].username + '-edited',
+                'first_name': self.users[1].first_name + '-edited',
+                'last_name': self.users[1].last_name + '-edited',
+                'password1': self.users[1].password + '-edited',
+                'password2': self.users[1].password + '-edited',
             },
             follow=True
         )
-        self.assertContains(response, 'User is successfully updated', status_code=200)
+        self.assertContains(response, _('User is successfully updated'), status_code=200)
         self.assertFalse(
-            User.objects.filter(username=self.users_data[1]['fields']['username']).exists()
+            User.objects.filter(username=old_name).exists()
         )
 
     def test_delete_user(self):
 
-        # user_id = User.objects.get(id=self.users_data[1]['pk']).id
-        request_url = '/users/' + str(self.users_data[1]['pk']) + '/delete/'
+        request_url = reverse_lazy('user_delete', kwargs={'pk': self.users[1].pk})
         response = self.client.get(request_url, follow=True)
-        self.assertContains(response, 'You are not logged in! Please log in.', status_code=200)
+        self.assertContains(response, _('You are not logged in! Please log in.'), status_code=200)
 
-        self.client.login(
-            username=self.users_data[0]['fields']['username'],
-            password=self.users_data[0]['fields']['password']
-        )
+        self.client.force_login(self.users[0])
         response = self.client.post(request_url, {}, follow=True)
-        self.assertContains(response, 'You have no rights to delete another user.', status_code=200)
+        self.assertContains(
+            response,
+            _('You have no rights to delete another user.'),
+            status_code=200
+        )
 
-        self.client.login(
-            username=self.users_data[1]['fields']['username'],
-            password=self.users_data[1]['fields']['password']
-        )
+        self.client.force_login(self.users[1])
         response = self.client.post(request_url, {}, follow=True)
-        self.assertContains(response, 'User is successfully deleted', status_code=200)
+        self.assertContains(response, _('User is successfully deleted'), status_code=200)
 
     def test_get_all_users(self):
 
-        response = self.client.get('/users/')
-        self.assertContains(response, self.users_data[0]['fields']['username'], status_code=200)
-        self.assertContains(response, self.users_data[1]['fields']['username'])
+        response = self.client.get(reverse_lazy('users'))
+        self.assertContains(response, self.users[0].username, status_code=200)
+        self.assertContains(response, self.users[1].username)

@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 import dj_database_url
+from django.test import modify_settings, override_settings
 
 
 load_dotenv()
@@ -162,3 +163,15 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+test_english = override_settings(
+    LANGUAGE_CODE='en-US',
+    LANGUAGES=(('en', 'English'),),
+)
+
+remove_rollbar = modify_settings(
+    MIDDLEWARE={
+        'remove':
+            ['rollbar.contrib.django.middleware.RollbarNotifierMiddleware', ]
+    }
+)
