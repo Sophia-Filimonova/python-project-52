@@ -1,0 +1,36 @@
+{
+    "users": {
+        "user1": {
+            "username": "Testuser1",
+            "first_name": "Test",
+            "last_name": "User",
+            "password1": "33Test1122!",
+            "password2": "33Test1122!"
+        }, 
+        "user2": {
+            "username": "Testuser2",
+            "first_name": "Test",
+            "last_name": "User",
+            "password1": "33Test1122!",
+            "password2": "33Test1122!"
+        }
+    },
+    "tasks": {
+        "task1": {
+            "name": "Testtask_3",
+            "description": "Test descriptrion",
+            "status": 1,
+            "executor": 2
+        }
+    },
+    "statuses": {
+        "status1": {
+            "name": "Teststatus_4"
+        }
+    },
+    "labels": {
+        "label1": {
+            "name": "Testlabel_4"
+        }
+    }
+}

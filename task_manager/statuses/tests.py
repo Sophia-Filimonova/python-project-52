@@ -3,12 +3,9 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from task_manager.helper import load_data
 from .models import Status
-from task_manager.settings import test_english, remove_rollbar
 from task_manager.users.models import MyUser as User
 
 
-@test_english
-@remove_rollbar
 class StatusCrudTestCase(TestCase):
 
     fixtures = ["users", "statuses", "labels", "tasks"]
@@ -22,19 +19,20 @@ class StatusCrudTestCase(TestCase):
         self.client.force_login(self.users[0])
         self.statuses = Status.objects.all()
 
+        self.test_statuses = load_data('test_data.json')["statuses"]
+
     def test_create_status(self):
 
         response = self.client.get(reverse_lazy('status_create'))
         self.assertContains(response, _('Create status'), status_code=200)
 
-        test_status = load_data('test_status.json')
         response = self.client.post(
             reverse_lazy('status_create'),
-            test_status,
+            self.test_statuses["status1"],
             follow=True
         )
         self.assertContains(response, _('Status is successfully created'), status_code=200)
-        self.assertTrue(Status.objects.filter(name=test_status["name"]).exists())
+        self.assertTrue(Status.objects.filter(name=self.test_statuses["status1"]["name"]).exists())
 
     def test_update_status(self):
 
@@ -72,9 +70,9 @@ class StatusCrudTestCase(TestCase):
             Status.objects.filter(name=name_deleted).exists()
         )
 
-    def test_get_all_tasks(self):
+    def test_get_all_statuses(self):
 
         response = self.client.get(reverse_lazy('statuses'))
-        self.assertContains(response, self.statuses[0].name, status_code=200)
+        self.assertContains(response, self.statuses[0].name)
         self.assertContains(response, self.statuses[1].name)
         self.assertContains(response, self.statuses[2].name)

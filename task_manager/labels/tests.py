@@ -3,12 +3,9 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from .models import Label
 from task_manager.helper import load_data
-from task_manager.settings import test_english, remove_rollbar
 from task_manager.users.models import MyUser as User
 
 
-@test_english
-@remove_rollbar
 class LabelsCrudTestCase(TestCase):
 
     fixtures = ["users", "labels", "tasks", "statuses"]
@@ -21,19 +18,19 @@ class LabelsCrudTestCase(TestCase):
 
         self.client.force_login(self.users[1])
         self.labels = Label.objects.all()
+        self.test_labels = load_data('test_data.json')["labels"]
 
     def test_create_label(self):
         response = self.client.get(reverse_lazy('label_create'))
         self.assertContains(response, _("Create label"), status_code=200)
 
-        test_label = load_data('test_label.json')
         response = self.client.post(
             reverse_lazy('label_create'),
-            test_label,
+            self.test_labels["label1"],
             follow=True
         )
         self.assertContains(response, _('Label is successfully created'), status_code=200)
-        self.assertTrue(Label.objects.filter(name=test_label["name"]).exists())
+        self.assertTrue(Label.objects.filter(name=self.test_labels["label1"]["name"]).exists())
 
     def test_update_label(self):
 
@@ -72,6 +69,6 @@ class LabelsCrudTestCase(TestCase):
     def test_get_all_labels(self):
 
         response = self.client.get(reverse_lazy('labels'))
-        self.assertContains(response, self.labels[0].name, status_code=200)
+        self.assertContains(response, self.labels[0].name)
         self.assertContains(response, self.labels[1].name)
         self.assertContains(response, self.labels[2].name)

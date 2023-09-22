@@ -48,7 +48,7 @@ class UserUpdateView(MyLoginRequiredMixin, SelfCheckUserMixin,
 class UserDeleteView(MyLoginRequiredMixin, SelfCheckUserMixin,
                      CanDeleteProtectedEntityMixin,
                      SuccessMessageMixin, DeleteView):
-    template_name = 'users/delete.html'
+    template_name = 'delete.html'
     model = MyUser
     success_url = reverse_lazy('users')
     success_message = _('User is successfully deleted')
@@ -60,3 +60,9 @@ class UserDeleteView(MyLoginRequiredMixin, SelfCheckUserMixin,
         'header': _('Deleting user'),
         'button_text': _('Yes, delete'),
     }
+
+    def get_context_data(self, **kwargs):
+        user = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['name'] = user
+        return context

@@ -43,7 +43,7 @@ class LabelUpdateView(MyLoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 class LabelDeleteView(MyLoginRequiredMixin, CanDeleteProtectedEntityMixin,
                       SuccessMessageMixin, DeleteView):
-    template_name = 'labels/delete.html'
+    template_name = 'delete.html'
     model = Label
     success_url = reverse_lazy('labels')
     success_message = _('Label is successfully deleted')
@@ -53,3 +53,9 @@ class LabelDeleteView(MyLoginRequiredMixin, CanDeleteProtectedEntityMixin,
         'header': _('Delete label'),
         'button_text': _('Yes, delete'),
     }
+
+    def get_context_data(self, **kwargs):
+        label = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['name'] = label.name
+        return context

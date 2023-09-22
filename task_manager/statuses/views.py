@@ -43,7 +43,7 @@ class StatusUpdateView(MyLoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 class StatusDeleteView(MyLoginRequiredMixin, CanDeleteProtectedEntityMixin,
                        SuccessMessageMixin, DeleteView):
-    template_name = 'statuses/delete.html'
+    template_name = 'delete.html'
     model = Status
     success_url = reverse_lazy('statuses')
     success_message = _('Status is successfully deleted')
@@ -53,3 +53,9 @@ class StatusDeleteView(MyLoginRequiredMixin, CanDeleteProtectedEntityMixin,
         'header': _('Delete status'),
         'button_text': _('Yes, delete'),
     }
+
+    def get_context_data(self, **kwargs):
+        status = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['name'] = status.name
+        return context

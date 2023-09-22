@@ -2,12 +2,9 @@ from django.test import TestCase
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from task_manager.helper import load_data
-from task_manager.settings import test_english, remove_rollbar
 from .models import MyUser as User
 
 
-@test_english
-@remove_rollbar
 class UserCrudTestCase(TestCase):
 
     fixtures = ["users"]
@@ -19,32 +16,32 @@ class UserCrudTestCase(TestCase):
             self.passwords_dict[user.pk] = user.password
             user.set_password(user.password)
             user.save()
+        self.test_users = load_data('test_data.json')['users']
 
     def test_create_user(self):
 
-        test_users = load_data('test_users.json')
         response = self.client.get(reverse_lazy('user_create'))
         self.assertContains(response, _('Registration'), status_code=200)
 
         response = self.client.post(
             reverse_lazy('user_create'),
-            test_users[0],
+            self.test_users["user1"],
             follow=True
         )
         self.assertContains(response, _('User is created successfully'), status_code=200)
         self.assertTrue(
-            User.objects.filter(username=test_users[0]["username"]).exists()
+            User.objects.filter(username=self.test_users["user1"]["username"]).exists()
         )
 
         response = self.client.post(
             reverse_lazy('user_create'),
-            test_users[1],
+            self.test_users["user2"],
             follow=False
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy('login'))
         self.assertTrue(
-            User.objects.filter(username=test_users[1]["username"]).exists()
+            User.objects.filter(username=self.test_users["user2"]["username"]).exists()
         )
 
     def test_login(self):
@@ -61,6 +58,7 @@ class UserCrudTestCase(TestCase):
             follow=True
         )
         self.assertContains(response, _('Exit'), status_code=200)
+        self.assertContains(response, _('You are logged in'), status_code=200)
 
         response = self.client.post(
             reverse_lazy('login'),
@@ -127,5 +125,5 @@ class UserCrudTestCase(TestCase):
     def test_get_all_users(self):
 
         response = self.client.get(reverse_lazy('users'))
-        self.assertContains(response, self.users[0].username, status_code=200)
+        self.assertContains(response, self.users[0].username)
         self.assertContains(response, self.users[1].username)

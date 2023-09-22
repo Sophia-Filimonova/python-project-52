@@ -60,7 +60,7 @@ class TaskUpdateView(MyLoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 class TaskDeleteView(MyLoginRequiredMixin, AuthorCanDeleteTaskMixin,
                      SuccessMessageMixin, DeleteView):
-    template_name = 'tasks/delete.html'
+    template_name = 'delete.html'
     model = Task
     success_url = reverse_lazy('tasks')
     success_message = _('Task is successfully deleted')
@@ -70,3 +70,9 @@ class TaskDeleteView(MyLoginRequiredMixin, AuthorCanDeleteTaskMixin,
         'header': _('Delete task'),
         'button_text': _('Yes, delete'),
     }
+
+    def get_context_data(self, **kwargs):
+        task = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['name'] = task.name
+        return context
