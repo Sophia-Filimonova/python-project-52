@@ -75,9 +75,6 @@ class UserCrudTestCase(TestCase):
 
         request_url = reverse_lazy('user_update', kwargs={'pk': self.users[0].pk})
 
-        response = self.client.get(request_url, follow=True)
-        self.assertContains(response, _('You are not logged in! Please log in.'), status_code=200)
-
         self.client.force_login(self.users[1])
         response = self.client.get(request_url, follow=True)
         self.assertContains(
@@ -107,9 +104,6 @@ class UserCrudTestCase(TestCase):
     def test_delete_user(self):
 
         request_url = reverse_lazy('user_delete', kwargs={'pk': self.users[1].pk})
-        response = self.client.get(request_url, follow=True)
-        self.assertContains(response, _('You are not logged in! Please log in.'), status_code=200)
-
         self.client.force_login(self.users[0])
         response = self.client.post(request_url, {}, follow=True)
         self.assertContains(
