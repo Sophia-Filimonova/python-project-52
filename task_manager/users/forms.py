@@ -1,18 +1,14 @@
-from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.utils.translation import gettext_lazy as _
 
 from .models import MyUser
 
 
 class UserForm(UserCreationForm):
 
-    first_name = forms.CharField(
-        max_length=150, required=True, label=_("First name")
-    )
-    last_name = forms.CharField(
-        max_length=150, required=True, label=_("Last name")
-    )
+    def init(self, *args, **kwargs):
+        super().init(*args, **kwargs)
+        self.fields['last_name'].required = True
+        self.fields['first_name'].requred = True
 
     class Meta:
         model = MyUser

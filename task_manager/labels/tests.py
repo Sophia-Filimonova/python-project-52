@@ -12,10 +12,6 @@ class LabelsCrudTestCase(TestCase):
 
     def setUp(self):
         self.users = User.objects.all()
-        for user in self.users:
-            user.set_password(user.password)
-            user.save()
-
         self.client.force_login(self.users[1])
         self.labels = Label.objects.all()
         self.test_labels = load_data('test_data.json')["labels"]

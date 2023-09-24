@@ -60,9 +60,3 @@ class UserDeleteView(MyLoginRequiredMixin, SelfCheckUserMixin,
         'header': _('Deleting user'),
         'button_text': _('Yes, delete'),
     }
-
-    def get_context_data(self, **kwargs):
-        user = self.get_object()
-        context = super().get_context_data(**kwargs)
-        context['name'] = user
-        return context

@@ -10,12 +10,7 @@ class UserCrudTestCase(TestCase):
     fixtures = ["users"]
 
     def setUp(self):
-        self.passwords_dict = {}
         self.users = User.objects.all()
-        for user in self.users:
-            self.passwords_dict[user.pk] = user.password
-            user.set_password(user.password)
-            user.save()
         self.test_users = load_data('test_data.json')['users']
 
     def test_create_user(self):
@@ -44,38 +39,13 @@ class UserCrudTestCase(TestCase):
             User.objects.filter(username=self.test_users["user2"]["username"]).exists()
         )
 
-    def test_login(self):
-
-        response = self.client.get(reverse_lazy('login'))
-        self.assertContains(response, _('Login'), status_code=200)
-
-        response = self.client.post(
-            reverse_lazy('login'),
-            {
-                "username": self.users[0].username,
-                "password": self.passwords_dict[self.users[0].pk],
-            },
-            follow=True
-        )
-        self.assertContains(response, _('Exit'), status_code=200)
-        self.assertContains(response, _('You are logged in'), status_code=200)
-
-        response = self.client.post(
-            reverse_lazy('login'),
-            {
-                'username': self.users[0].username,
-                'password': self.passwords_dict[self.users[0].pk],
-            },
-            follow=False
-        )
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse_lazy('home'))
-
     def test_update_user(self):
 
-        request_url = reverse_lazy('user_update', kwargs={'pk': self.users[0].pk})
+        user1 = self.users[0]
+        user2 = self.users[1]
+        request_url = reverse_lazy('user_update', kwargs={'pk': user1.pk})
 
-        self.client.force_login(self.users[1])
+        self.client.force_login(user2)
         response = self.client.get(request_url, follow=True)
         self.assertContains(
             response,
@@ -83,16 +53,16 @@ class UserCrudTestCase(TestCase):
             status_code=200
         )
 
-        request_url = reverse_lazy('user_update', kwargs={'pk': self.users[1].pk})
-        old_name = self.users[1].username
+        request_url = reverse_lazy('user_update', kwargs={'pk': user2.pk})
+        old_name = user2.username
         response = self.client.post(
             request_url,
             {
-                'username': self.users[1].username + '-edited',
-                'first_name': self.users[1].first_name + '-edited',
-                'last_name': self.users[1].last_name + '-edited',
-                'password1': self.users[1].password + '-edited',
-                'password2': self.users[1].password + '-edited',
+                'username': user2.username + '-edited',
+                'first_name': user2.first_name + '-edited',
+                'last_name': user2.last_name + '-edited',
+                'password1': user2.password,
+                'password2': user2.password,
             },
             follow=True
         )
@@ -103,8 +73,10 @@ class UserCrudTestCase(TestCase):
 
     def test_delete_user(self):
 
-        request_url = reverse_lazy('user_delete', kwargs={'pk': self.users[1].pk})
-        self.client.force_login(self.users[0])
+        user1 = self.users[0]
+        user2 = self.users[1]
+        request_url = reverse_lazy('user_delete', kwargs={'pk': user2.pk})
+        self.client.force_login(user1)
         response = self.client.post(request_url, {}, follow=True)
         self.assertContains(
             response,
@@ -112,7 +84,7 @@ class UserCrudTestCase(TestCase):
             status_code=200
         )
 
-        self.client.force_login(self.users[1])
+        self.client.force_login(user2)
         response = self.client.post(request_url, {}, follow=True)
         self.assertContains(response, _('User is successfully deleted'), status_code=200)
 

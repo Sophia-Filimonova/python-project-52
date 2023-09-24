@@ -42,12 +42,12 @@ class CanDeleteProtectedEntityMixin:
 
 
 class AuthorCanDeleteTaskMixin(UserPassesTestMixin):
-    author_message = None
-    author_url = None
+    author_check_message = None
+    author_check_url = None
 
     def test_func(self):
         return self.get_object().author == self.request.user
 
     def handle_no_permission(self):
-        messages.error(self.request, self.author_message)
-        return redirect(self.author_url)
+        messages.error(self.request, self.author_check_message)
+        return redirect(self.author_check_url)

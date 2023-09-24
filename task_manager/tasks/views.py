@@ -64,15 +64,9 @@ class TaskDeleteView(MyLoginRequiredMixin, AuthorCanDeleteTaskMixin,
     model = Task
     success_url = reverse_lazy('tasks')
     success_message = _('Task is successfully deleted')
-    author_message = _('The task can be deleted only by its author')
-    author_url = reverse_lazy('tasks')
+    author_check_message = _('The task can be deleted only by its author')
+    author_check_url = reverse_lazy('tasks')
     extra_context = {
         'header': _('Delete task'),
         'button_text': _('Yes, delete'),
     }
-
-    def get_context_data(self, **kwargs):
-        task = self.get_object()
-        context = super().get_context_data(**kwargs)
-        context['name'] = task.name
-        return context

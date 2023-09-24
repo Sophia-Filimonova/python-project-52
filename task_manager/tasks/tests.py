@@ -12,10 +12,6 @@ class TasksCrudTestCase(TestCase):
 
     def setUp(self):
         self.users = User.objects.all()
-        for user in self.users:
-            user.set_password(user.password)
-            user.save()
-
         self.client.force_login(self.users[0])
         self.tasks = Task.objects.all()
         self.test_tasks = load_data('test_data.json')["tasks"]

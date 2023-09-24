@@ -53,9 +53,3 @@ class LabelDeleteView(MyLoginRequiredMixin, CanDeleteProtectedEntityMixin,
         'header': _('Delete label'),
         'button_text': _('Yes, delete'),
     }
-
-    def get_context_data(self, **kwargs):
-        label = self.get_object()
-        context = super().get_context_data(**kwargs)
-        context['name'] = label.name
-        return context
