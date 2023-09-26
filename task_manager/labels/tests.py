@@ -65,6 +65,5 @@ class LabelsCrudTestCase(TestCase):
     def test_get_all_labels(self):
 
         response = self.client.get(reverse_lazy('labels'))
-        self.assertContains(response, self.labels[0].name)
-        self.assertContains(response, self.labels[1].name)
-        self.assertContains(response, self.labels[2].name)
+        for label in self.labels:
+            self.assertContains(response, label.name)

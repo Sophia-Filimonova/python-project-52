@@ -77,8 +77,8 @@ class TasksCrudTestCase(TestCase):
     def test_get_all_tasks(self):
 
         response = self.client.get(reverse_lazy('tasks'))
-        self.assertContains(response, self.tasks[0].name)
-        self.assertContains(response, self.tasks[1].name)
+        for task in self.tasks:
+            self.assertContains(response, task.name)
 
         self.client.force_login(self.users[1])
 

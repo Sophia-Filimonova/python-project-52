@@ -17,6 +17,7 @@ django-bootstrap4 = "^23.1"
 django-extensions = "^3.2.3"
 django-filter = "^23.2"
 rollbar = "^0.16.3"
+pytest = "^7.4.2"
 
 
 [tool.poetry.group.dev.dependencies]

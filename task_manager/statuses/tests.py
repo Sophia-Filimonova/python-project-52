@@ -69,6 +69,5 @@ class StatusCrudTestCase(TestCase):
     def test_get_all_statuses(self):
 
         response = self.client.get(reverse_lazy('statuses'))
-        self.assertContains(response, self.statuses[0].name)
-        self.assertContains(response, self.statuses[1].name)
-        self.assertContains(response, self.statuses[2].name)
+        for status in self.statuses:
+            self.assertContains(response, status.name)

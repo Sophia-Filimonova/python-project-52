@@ -91,5 +91,5 @@ class UserCrudTestCase(TestCase):
     def test_get_all_users(self):
 
         response = self.client.get(reverse_lazy('users'))
-        self.assertContains(response, self.users[0].username)
-        self.assertContains(response, self.users[1].username)
+        for user in self.users:
+            self.assertContains(response, user.username)
