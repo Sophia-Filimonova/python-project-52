@@ -8,16 +8,20 @@ from django.utils.translation import gettext as _
 
 class MyLoginRequiredMixin(LoginRequiredMixin):
 
-    login_url = reverse_lazy('login')
-    permission_denied_message = _('You are not logged in! Please log in.')
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request,
+                           _('You are not logged in! Please log in.'))
+            return redirect(reverse_lazy('login'))
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     if not request.user.is_authenticated:
-    #         messages.error(request,
-    #                        _('You are not logged in! Please log in.'))
-    #         return redirect(reverse_lazy('login'))
+        return super().dispatch(request, *args, **kwargs)
 
-    #     return super().dispatch(request, *args, **kwargs)
+    # login_url = reverse_lazy('login')
+    # denied_message = _('You are not logged in! Please log in.')
+
+    # def handle_no_permission(self):
+    #     messages.error(self.request, self.denied_message)
+    #     return redirect(self.login_url)
 
 
 class SelfCheckUserMixin(UserPassesTestMixin):

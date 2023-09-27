@@ -30,13 +30,16 @@ class UserCrudTestCase(TestCase):
 
         response = self.client.post(
             reverse_lazy('user_create'),
-            self.test_users["user2"],
-            follow=False
+            self.test_users["user3"],
+            follow=True
         )
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse_lazy('login'))
-        self.assertTrue(
-            User.objects.filter(username=self.test_users["user2"]["username"]).exists()
+        self.assertContains(
+            response,
+            _('A user with that username already exists.'),
+            status_code=200
+        )
+        self.assertFalse(
+            User.objects.filter(first_name=self.test_users["user3"]["first_name"]).exists()
         )
 
     def test_update_user(self):

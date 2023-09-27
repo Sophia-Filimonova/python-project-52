@@ -2,15 +2,22 @@
     "users": {
         "user1": {
             "username": "Testuser1",
-            "first_name": "Test",
-            "last_name": "User",
+            "first_name": "First1",
+            "last_name": "Last1",
             "password1": "33Test1122!",
             "password2": "33Test1122!"
         }, 
         "user2": {
             "username": "Testuser2",
-            "first_name": "Test",
-            "last_name": "User",
+            "first_name": "First2",
+            "last_name": "Last2",
+            "password1": "33Test1122!",
+            "password2": "33Test1122!"
+        },
+        "user3": {
+            "username": "Testuser1",
+            "first_name": "First3",
+            "last_name": "Last3",
             "password1": "33Test1122!",
             "password2": "33Test1122!"
         }
