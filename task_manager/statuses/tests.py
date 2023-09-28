@@ -14,7 +14,6 @@ class StatusCrudTestCase(TestCase):
         self.users = User.objects.all()
         self.client.force_login(self.users[0])
         self.statuses = Status.objects.all()
-
         self.test_statuses = load_data('test_data.json')["statuses"]
 
     def test_create_status(self):
@@ -32,9 +31,9 @@ class StatusCrudTestCase(TestCase):
 
     def test_update_status(self):
 
-        request_url = reverse_lazy('status_update', kwargs={'pk': self.statuses[0].pk})
-
-        new_name = self.statuses[0].name + "-edited"
+        status1 = self.statuses[0]
+        request_url = reverse_lazy('status_update', kwargs={'pk': status1.pk})
+        new_name = status1.name + "-edited"
         response = self.client.post(
             request_url,
             {
@@ -47,7 +46,9 @@ class StatusCrudTestCase(TestCase):
 
     def test_delete_status(self):
 
-        request_url = reverse_lazy('status_delete', kwargs={'pk': self.statuses[0].pk})
+        status1 = self.statuses[0]
+        status3 = self.statuses[2]
+        request_url = reverse_lazy('status_delete', kwargs={'pk': status1.pk})
         response = self.client.get(request_url, follow=True)
         self.assertContains(response, _('Yes, delete'), status_code=200)
         response = self.client.post(request_url, follow=True)
@@ -57,8 +58,8 @@ class StatusCrudTestCase(TestCase):
             status_code=200
         )
 
-        request_url = reverse_lazy('status_delete', kwargs={'pk': self.statuses[2].pk})
-        name_deleted = self.statuses[2].name
+        request_url = reverse_lazy('status_delete', kwargs={'pk': status3.pk})
+        name_deleted = status3.name
         response = self.client.post(request_url, follow=True)
         self.assertContains(response, _('Status is successfully deleted'), status_code=200)
 

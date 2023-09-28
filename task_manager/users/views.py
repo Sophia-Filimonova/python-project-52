@@ -6,7 +6,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from task_manager.mixins import MyLoginRequiredMixin,\
     SelfCheckUserMixin, CanDeleteProtectedEntityMixin
 from .models import MyUser
-from .forms import UserForm
+from .forms import UserCreateForm, UserUpdateForm
 
 
 class UserListView(ListView):
@@ -20,7 +20,7 @@ class UserListView(ListView):
 
 class UserCreateView(SuccessMessageMixin, CreateView):
     model = MyUser
-    form_class = UserForm
+    form_class = UserCreateForm
     template_name = 'form.html'
     success_url = reverse_lazy('login')
     success_message = _('User is created successfully')
@@ -34,7 +34,7 @@ class UserUpdateView(MyLoginRequiredMixin, SelfCheckUserMixin,
                      SuccessMessageMixin, UpdateView):
     template_name = 'form.html'
     model = MyUser
-    form_class = UserForm
+    form_class = UserUpdateForm
     success_url = reverse_lazy('users')
     success_message = _('User is successfully updated')
     permission_message = _('You have no rights to change another user.')

@@ -8,8 +8,8 @@ class LoginMixinTestCase(TestCase):
 
     fixtures = ["users", "labels", "tasks", "statuses"]
 
-    def test_access_without_login(self):
-        urls = [
+    def setUp(self):
+        self.urls = [
             reverse('user_update', kwargs={'pk': 1}),
             reverse('user_delete', kwargs={'pk': 1}),
             reverse('labels'),
@@ -27,7 +27,9 @@ class LoginMixinTestCase(TestCase):
             reverse('task_delete', kwargs={'pk': 1}),
         ]
 
-        for url in urls:
+    def test_access_without_login(self):
+
+        for url in self.urls:
 
             response = self.client.get(url, follow=False)
             self.assertEqual(response.status_code, 302)

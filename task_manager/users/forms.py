@@ -1,9 +1,9 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from .models import MyUser
 
 
-class UserForm(UserCreationForm):
+class UserCreateForm(UserCreationForm):
 
     def init(self, *args, **kwargs):
         super().init(*args, **kwargs)
@@ -15,3 +15,11 @@ class UserForm(UserCreationForm):
         fields = ['first_name', 'last_name',
                   'username', 'password1', 'password2'
                   ]
+
+
+class UserUpdateForm(UserChangeForm):
+
+    class Meta:
+        model = MyUser
+        fields = ['first_name', 'last_name',
+                  'username']

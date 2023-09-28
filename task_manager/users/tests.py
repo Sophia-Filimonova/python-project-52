@@ -74,6 +74,19 @@ class UserCrudTestCase(TestCase):
             User.objects.filter(username=old_name).exists()
         )
 
+        response = self.client.post(
+            request_url,
+            {
+                'username': user2.username,
+                'first_name': user2.first_name + '-edited',
+                'last_name': user2.last_name + '-edited',
+                'password1': user2.password,
+                'password2': user2.password,
+            },
+            follow=True
+        )
+        self.assertContains(response, _('User is successfully updated'), status_code=200)
+
     def test_delete_user(self):
 
         user1 = self.users[0]

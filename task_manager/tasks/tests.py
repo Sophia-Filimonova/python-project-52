@@ -30,16 +30,16 @@ class TasksCrudTestCase(TestCase):
 
     def test_update_task(self):
 
-        request_url = reverse_lazy('task_update', kwargs={'pk': self.tasks[0].pk})
-
-        old_name = self.tasks[0].name
+        task1 = self.tasks[0]
+        request_url = reverse_lazy('task_update', kwargs={'pk': task1.pk})
+        old_name = task1.name
         response = self.client.post(
             request_url,
             {
-                'name': self.tasks[0].name + '-edited',
-                'description': self.tasks[0].description + '-edited',
-                'status': self.tasks[0].status.pk,
-                'executor': self.tasks[0].executor.pk,
+                'name': task1.name + '-edited',
+                'description': task1.description + '-edited',
+                'status': task1.status.pk,
+                'executor': task1.executor.pk,
                 'labels': [1, 2],
             },
             follow=True
@@ -49,15 +49,15 @@ class TasksCrudTestCase(TestCase):
 
     def test_delete_task(self):
 
-        request_url = reverse_lazy('task_delete', kwargs={'pk': self.tasks[0].pk})
-
+        task1 = self.tasks[0]
+        task2 = self.tasks[1]
+        request_url = reverse_lazy('task_delete', kwargs={'pk': task1.pk})
         response = self.client.get(request_url, follow=True)
         self.assertContains(
             response,
             _('The task can be deleted only by its author'),
             status_code=200
         )
-
         response = self.client.post(request_url, follow=True)
         self.assertContains(
             response,
@@ -65,13 +65,12 @@ class TasksCrudTestCase(TestCase):
             status_code=200
         )
 
-        request_url = reverse_lazy('task_delete', kwargs={'pk': self.tasks[1].pk})
+        request_url = reverse_lazy('task_delete', kwargs={'pk': task2.pk})
         response = self.client.get(request_url, follow=True)
         self.assertContains(response, _('Yes, delete'), status_code=200)
-        name_deleted = self.tasks[1].name
+        name_deleted = task2.name
         response = self.client.post(request_url, follow=True)
         self.assertContains(response, _('Task is successfully deleted'), status_code=200)
-
         self.assertFalse(Task.objects.filter(name=name_deleted).exists())
 
     def test_get_all_tasks(self):

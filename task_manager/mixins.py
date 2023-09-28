@@ -16,13 +16,6 @@ class MyLoginRequiredMixin(LoginRequiredMixin):
 
         return super().dispatch(request, *args, **kwargs)
 
-    # login_url = reverse_lazy('login')
-    # denied_message = _('You are not logged in! Please log in.')
-
-    # def handle_no_permission(self):
-    #     messages.error(self.request, self.denied_message)
-    #     return redirect(self.login_url)
-
 
 class SelfCheckUserMixin(UserPassesTestMixin):
     permission_message = None

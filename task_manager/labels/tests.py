@@ -30,9 +30,9 @@ class LabelsCrudTestCase(TestCase):
 
     def test_update_label(self):
 
-        request_url = reverse_lazy('label_update', kwargs={'pk': self.labels[0].pk})
-
-        new_name = self.labels[0].name + "-edited"
+        label1 = self.labels[0]
+        request_url = reverse_lazy('label_update', kwargs={'pk': label1.pk})
+        new_name = label1.name + "-edited"
         response = self.client.post(
             request_url,
             {
@@ -45,7 +45,9 @@ class LabelsCrudTestCase(TestCase):
 
     def test_delete_label(self):
 
-        request_url = reverse_lazy('label_delete', kwargs={'pk': self.labels[0].pk})
+        label1 = self.labels[0]
+        label3 = self.labels[2]
+        request_url = reverse_lazy('label_delete', kwargs={'pk': label1.pk})
         response = self.client.get(request_url, follow=True)
         self.assertContains(response, _('Yes, delete'), status_code=200)
         response = self.client.post(request_url, follow=True)
@@ -55,8 +57,8 @@ class LabelsCrudTestCase(TestCase):
             status_code=200
         )
 
-        request_url = reverse_lazy('label_delete', kwargs={'pk': self.labels[2].pk})
-        name_deleted = self.labels[2].name
+        request_url = reverse_lazy('label_delete', kwargs={'pk': label3.pk})
+        name_deleted = label3.name
         response = self.client.post(request_url, follow=True)
         self.assertContains(response, _('Label is successfully deleted'), status_code=200)
 
