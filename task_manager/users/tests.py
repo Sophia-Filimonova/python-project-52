@@ -57,23 +57,6 @@ class UserCrudTestCase(TestCase):
         )
 
         request_url = reverse_lazy('user_update', kwargs={'pk': user2.pk})
-        old_name = user2.username
-        response = self.client.post(
-            request_url,
-            {
-                'username': user2.username + '-edited',
-                'first_name': user2.first_name + '-edited',
-                'last_name': user2.last_name + '-edited',
-                'password1': user2.password,
-                'password2': user2.password,
-            },
-            follow=True
-        )
-        self.assertContains(response, _('User is successfully updated'), status_code=200)
-        self.assertFalse(
-            User.objects.filter(username=old_name).exists()
-        )
-
         response = self.client.post(
             request_url,
             {
@@ -86,6 +69,9 @@ class UserCrudTestCase(TestCase):
             follow=True
         )
         self.assertContains(response, _('User is successfully updated'), status_code=200)
+        self.assertTrue(
+            User.objects.filter(first_name=user2.first_name + '-edited').exists()
+        )
 
     def test_delete_user(self):
 
