@@ -22,11 +22,11 @@ class LabelsCrudTestCase(TestCase):
 
         response = self.client.post(
             reverse_lazy('label_create'),
-            self.test_labels["label1"],
+            self.test_labels["new"],
             follow=True
         )
         self.assertContains(response, _('Label is successfully created'), status_code=200)
-        self.assertTrue(Label.objects.filter(name=self.test_labels["label1"]["name"]).exists())
+        self.assertTrue(Label.objects.filter(name=self.test_labels["new"]["name"]).exists())
 
     def test_update_label(self):
 
@@ -43,10 +43,9 @@ class LabelsCrudTestCase(TestCase):
         self.assertContains(response, _('Label is successfully changed'), status_code=200)
         self.assertTrue(Label.objects.filter(name=new_name).exists())
 
-    def test_delete_label(self):
+    def test_delete_label_in_use(self):
 
         label1 = self.labels[0]
-        label3 = self.labels[2]
         request_url = reverse_lazy('label_delete', kwargs={'pk': label1.pk})
         response = self.client.get(request_url, follow=True)
         self.assertContains(response, _('Yes, delete'), status_code=200)
@@ -57,6 +56,8 @@ class LabelsCrudTestCase(TestCase):
             status_code=200
         )
 
+    def test_delete_label_successfully(self):
+        label3 = self.labels[2]
         request_url = reverse_lazy('label_delete', kwargs={'pk': label3.pk})
         name_deleted = label3.name
         response = self.client.post(request_url, follow=True)

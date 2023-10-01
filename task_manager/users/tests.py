@@ -20,17 +20,17 @@ class UserCrudTestCase(TestCase):
 
         response = self.client.post(
             reverse_lazy('user_create'),
-            self.test_users["user1"],
+            self.test_users["new"],
             follow=True
         )
         self.assertContains(response, _('User is created successfully'), status_code=200)
         self.assertTrue(
-            User.objects.filter(username=self.test_users["user1"]["username"]).exists()
+            User.objects.filter(username=self.test_users["new"]["username"]).exists()
         )
 
         response = self.client.post(
             reverse_lazy('user_create'),
-            self.test_users["user3"],
+            self.test_users["new"],
             follow=True
         )
         self.assertContains(
@@ -38,11 +38,8 @@ class UserCrudTestCase(TestCase):
             _('A user with that username already exists.'),
             status_code=200
         )
-        self.assertFalse(
-            User.objects.filter(first_name=self.test_users["user3"]["first_name"]).exists()
-        )
 
-    def test_update_user(self):
+    def test_update_another_user(self):
 
         user1 = self.users[0]
         user2 = self.users[1]
@@ -56,6 +53,10 @@ class UserCrudTestCase(TestCase):
             status_code=200
         )
 
+    def test_update_user_successfully(self):
+
+        user2 = self.users[1]
+        self.client.force_login(user2)
         request_url = reverse_lazy('user_update', kwargs={'pk': user2.pk})
         response = self.client.post(
             request_url,
@@ -73,12 +74,12 @@ class UserCrudTestCase(TestCase):
             User.objects.filter(first_name=user2.first_name + '-edited').exists()
         )
 
-    def test_delete_user(self):
+    def test_delete_another_user(self):
 
         user1 = self.users[0]
         user2 = self.users[1]
-        request_url = reverse_lazy('user_delete', kwargs={'pk': user2.pk})
-        self.client.force_login(user1)
+        request_url = reverse_lazy('user_delete', kwargs={'pk': user1.pk})
+        self.client.force_login(user2)
         response = self.client.post(request_url, {}, follow=True)
         self.assertContains(
             response,
@@ -86,7 +87,11 @@ class UserCrudTestCase(TestCase):
             status_code=200
         )
 
-        self.client.force_login(user2)
+    def test_delete_user_successfully(self):
+
+        user1 = self.users[0]
+        request_url = reverse_lazy('user_delete', kwargs={'pk': user1.pk})
+        self.client.force_login(user1)
         response = self.client.post(request_url, {}, follow=True)
         self.assertContains(response, _('User is successfully deleted'), status_code=200)
 

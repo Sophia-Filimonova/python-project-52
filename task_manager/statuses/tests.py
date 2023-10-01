@@ -23,11 +23,11 @@ class StatusCrudTestCase(TestCase):
 
         response = self.client.post(
             reverse_lazy('status_create'),
-            self.test_statuses["status1"],
+            self.test_statuses["new"],
             follow=True
         )
         self.assertContains(response, _('Status is successfully created'), status_code=200)
-        self.assertTrue(Status.objects.filter(name=self.test_statuses["status1"]["name"]).exists())
+        self.assertTrue(Status.objects.filter(name=self.test_statuses["new"]["name"]).exists())
 
     def test_update_status(self):
 
@@ -44,10 +44,9 @@ class StatusCrudTestCase(TestCase):
         self.assertContains(response, _('Status is successfully changed'), status_code=200)
         self.assertTrue(Status.objects.filter(name=new_name).exists())
 
-    def test_delete_status(self):
+    def test_delete_status_in_use(self):
 
         status1 = self.statuses[0]
-        status3 = self.statuses[2]
         request_url = reverse_lazy('status_delete', kwargs={'pk': status1.pk})
         response = self.client.get(request_url, follow=True)
         self.assertContains(response, _('Yes, delete'), status_code=200)
@@ -58,11 +57,13 @@ class StatusCrudTestCase(TestCase):
             status_code=200
         )
 
+    def test_delete_status_successfully(self):
+
+        status3 = self.statuses[2]
         request_url = reverse_lazy('status_delete', kwargs={'pk': status3.pk})
         name_deleted = status3.name
         response = self.client.post(request_url, follow=True)
         self.assertContains(response, _('Status is successfully deleted'), status_code=200)
-
         self.assertFalse(
             Status.objects.filter(name=name_deleted).exists()
         )

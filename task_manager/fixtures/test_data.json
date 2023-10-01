@@ -1,29 +1,15 @@
 {
     "users": {
-        "user1": {
+        "new": {
             "username": "Testuser1",
             "first_name": "First1",
             "last_name": "Last1",
             "password1": "33Test1122!",
             "password2": "33Test1122!"
-        }, 
-        "user2": {
-            "username": "Testuser2",
-            "first_name": "First2",
-            "last_name": "Last2",
-            "password1": "33Test1122!",
-            "password2": "33Test1122!"
-        },
-        "user3": {
-            "username": "Testuser1",
-            "first_name": "First3",
-            "last_name": "Last3",
-            "password1": "33Test1122!",
-            "password2": "33Test1122!"
         }
     },
     "tasks": {
-        "task1": {
+        "new": {
             "name": "Testtask_3",
             "description": "Test descriptrion",
             "status": 1,
@@ -31,12 +17,12 @@
         }
     },
     "statuses": {
-        "status1": {
+        "new": {
             "name": "Teststatus_4"
         }
     },
     "labels": {
-        "label1": {
+        "new": {
             "name": "Testlabel_4"
         }
     }
